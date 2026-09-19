@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shoulders">
+<meta name="theme-color" content="#14212B">
+<meta name="format-detection" content="telephone=no, date=no, address=no">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADCklEQVR42u3dwY1TQRBF0ReE94gtZEMYbAiFJFkhgmDP2IwF/tXVXUe6AVhvzmhkjX85t4+fpbvFBIJDcAgOwSE4BIfgEByCQ3BIcAgOwSE4BIfgEByCQ3AIDgkOwSE4BIfgEByCQ3AIDsEhwSE43vTj56/ngwMLRKbi+GcTY5WEDD7m4ng5izlEQgYfE3EUyDjbR8jgYxaOYhmn+ggZfEzBsVDGeT7ggGMGjuUyDvMRMviAAw444ICjs4xjfMABx9E4Gso4wwcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxw+DwHHHDA4TOkcMABBxxw8OGJNz7IgAOOeThu7nPA0dDHeTO6CUbGPBw31wThWO7j4PVcMCZjMI6LiEwYzbcmkAHHK5RMG8o3NWEBh+AQHIJDcAgOwSE4BIfgkOAQHBqM49O370824ad40Ro5dYUJSq5eIxOGOI9IzRqZM8QZRCrXyLQh9iVSv0ZmDrEXkVVrZPgW/X0sXCPDh+hMZPkasUVPHx3WSIdROgzRh0ifHbJ2lG4srPEQR/EinWVY4w6OmlH6s7DGQxzXjbIXi+FrpGyUfVmMXSMFo5zBYuAauW6XS1/3hy9fn6yJkh3XyF6/ss+vUKzkyDUyYYjziNSskTlDnEGkco1MG2JfIvVrZOYQexFZtUaGb9Hfx8I1MnyIzkSWr5Emo6wdohuRJlOkwyJ9ZFjjDo5Vo3RjYY2HOIoX6SzDGndw1Izy/6/7+X9q9CfSdo0Uj1K2wsuVDFwjZaMsHKIhkS3WSMEoTYZoQmSjNXLdLpV/SpcQOX6N9HybUPmx7/5vmlatkeFb9PexcI0MH6IzkeVrpMkofR5StcafT9nboo+PptcEsbDG3463kGGNd463YGGNd463YDF8jZSNcsYB0FFrpGCU804HD1kj1+0y4ej42Wv41gTBITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHIJDcAgOwSE4BIfgkOAQHIJDcAgOwSE4BIeO6TeqdK7E19yU9QAAAABJRU5ErkJggg==">
+<title>Shoulders: swim return</title>
+<style>
+:root{
+  --ink:#14212B;
+  --slate:#3B5566;
+  --mute:#6F7F89;
+  --paper:#E4EAEC;
+  --card:#F3F6F6;
+  --line:#C5CFD3;
+  --accent:#2A6F8F;
+  --accent-soft:#DCEAF0;
+  --caution:#A8781F;
+  --clear:#3F6E52;
+  --flare:#9E4128;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;
+  font-size:15px;line-height:1.45;
+  padding:0 0 calc(90px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;
+}
+.wrap{max-width:520px;margin:0 auto;padding:0 16px}
+.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace}
+
+/* masthead */
+header{padding:calc(22px + env(safe-area-inset-top)) 0 8px}
+.eyebrow{font-size:12px;color:var(--mute);letter-spacing:.02em}
+h1{font-size:24px;font-weight:800;letter-spacing:-.025em;margin:4px 0 0;line-height:1.15}
+.sub{font-size:12.5px;color:var(--slate);margin-top:5px}
+
+/* today bar */
+.today{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--ink);color:var(--paper);border-radius:11px;padding:12px 14px;margin-top:14px;
+}
+.today .tlabel{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.today .tsub{font-size:12px;opacity:.72;margin-top:2px}
+.jump{
+  background:var(--accent);border:0;color:#fff;border-radius:7px;padding:8px 13px;
+  font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;flex:none;min-height:34px;
+}
+.today.setup{display:block}
+.today.setup .tsub{margin-bottom:11px;line-height:1.5}
+.datein{
+  width:100%;background:transparent;border:1px solid rgba(228,234,236,.3);border-radius:8px;
+  color:var(--paper);font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:16px;padding:10px 12px;
+  margin-bottom:9px;-webkit-appearance:none;appearance:none;color-scheme:dark;
+}
+.startbtn{
+  width:100%;background:var(--accent);border:0;color:#fff;border-radius:8px;padding:12px;
+  font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;min-height:44px;
+}
+
+/* the ladder: build, gate, swim */
+.ladbox{margin:18px 0 6px}
+.ladder{display:flex;gap:3px;align-items:flex-end;height:40px}
+.chip{
+  flex:1;height:22px;border-radius:3px;background:var(--line);color:var(--mute);
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;
+  display:flex;align-items:center;justify-content:center;transition:height .18s ease,background .18s ease;
+}
+.chip.lv.done{background:var(--slate);color:#fff}
+.chip.lv.now{background:var(--ink);color:#fff;height:36px}
+.chip.gt{flex:1.15}
+.chip.gt.done{background:var(--caution);color:#fff}
+.chip.gt.now{background:var(--caution);color:#fff;height:36px}
+.chip.rg.done{background:var(--accent);color:#fff}
+.chip.rg.now{background:var(--ink);color:#fff;height:36px}
+.ladlab{display:flex;gap:3px;margin-top:6px;font-size:11px;color:var(--mute)}
+.ladlab span:nth-child(1){flex:6}
+.ladlab span:nth-child(2){flex:1.15;text-align:center}
+.ladlab span:nth-child(3){flex:8;text-align:right}
+.ladstate{font-size:13px;color:var(--slate);margin-top:9px;line-height:1.45}
+.ladstate b{color:var(--ink);font-weight:600}
+
+/* week bar */
+.weekbar{display:flex;align-items:center;gap:10px;margin:18px 0 12px}
+.navbtn{
+  width:44px;height:44px;flex:none;border:1px solid var(--line);background:var(--card);
+  border-radius:9px;font-size:17px;color:var(--slate);cursor:pointer;line-height:1;
+}
+.navbtn:disabled{opacity:.32;cursor:default}
+.wtitle{flex:1;text-align:center}
+.wnum{font-size:12px;color:var(--mute)}
+.wphase{font-size:16px;font-weight:600;letter-spacing:-.015em;margin-top:1px}
+
+.banner{
+  border-radius:10px;padding:11px 13px;font-size:13px;margin-bottom:12px;
+  border:1px solid var(--line);background:var(--card);
+}
+.banner.gate{border-color:#C9B98A;background:#F5F0E1}
+.banner.swim{border-color:#9DBFCE;background:var(--accent-soft)}
+.banner.ok{border-color:#9FB6A6;background:#EAF1EB}
+.banner.warn{border-color:#D9B3A6;background:#F6E7E1}
+.banner b{font-weight:600}
+
+/* pull card */
+.pullbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.pullbox h3{margin:0 0 3px;font-size:14px;font-weight:600;letter-spacing:-.01em}
+.pullbox p{margin:0 0 9px;font-size:12px;color:var(--slate);line-height:1.4}
+.popts{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:6px}
+.popt{
+  border:1px solid var(--line);background:transparent;border-radius:8px;min-height:44px;padding:8px;
+  font-family:inherit;font-size:12.5px;color:var(--slate);cursor:pointer;line-height:1.2;
+}
+.popt[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* session cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:11px;overflow:hidden}
+.chead{display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer;min-height:44px}
+.dot{width:11px;height:11px;border-radius:50%;flex:none;border:2px solid var(--line);background:transparent}
+.dot.part{border-color:var(--slate);background:linear-gradient(90deg,var(--slate) 50%,transparent 50%)}
+.dot.done{border-color:var(--accent);background:var(--accent)}
+.dot.hold{border-color:var(--caution);background:var(--caution)}
+.dot.clear{border-color:var(--clear);background:var(--clear)}
+.dot.bad{border-color:var(--flare);background:var(--flare)}
+.dot.miss{border:2px dashed var(--mute)}
+.ctitle{flex:1;font-weight:600;font-size:14.5px;letter-spacing:-.01em}
+.cmeta{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;color:var(--mute)}
+.chev{color:var(--mute);font-size:12px;transition:transform .2s}
+.card.open .chev{transform:rotate(90deg)}
+.cbody{display:none;padding:0 14px 14px}
+.card.open .cbody{display:block}
+.grp{font-size:12px;color:var(--mute);margin:12px 0 2px}
+
+/* exercise rows */
+.exrow{display:flex;align-items:center;gap:11px;padding:9px 0;border-top:1px solid var(--line)}
+.box{
+  width:30px;height:30px;flex:none;border:1.5px solid var(--line);border-radius:7px;
+  background:transparent;cursor:pointer;position:relative;padding:0;
+}
+.box[aria-pressed="true"]{background:var(--slate);border-color:var(--slate)}
+.box[aria-pressed="true"]::after{
+  content:'';position:absolute;left:10px;top:6px;width:6px;height:12px;
+  border:solid #F3F6F6;border-width:0 2px 2px 0;transform:rotate(43deg);
+}
+.exname{flex:1;font-size:13.5px;line-height:1.3}
+.exsub{font-size:11px;color:var(--mute)}
+.newtag{
+  display:inline-block;margin-left:6px;padding:1px 6px;border-radius:9px;background:var(--accent);color:#fff;
+  font-size:10.5px;font-weight:600;vertical-align:1px;
+}
+.exdose{
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--slate);
+  text-align:right;white-space:nowrap;line-height:1.35;
+}
+.exdose i{font-style:normal;color:var(--mute);font-size:10.5px}
+
+/* 48h verdict */
+.verdict{margin-top:13px;padding-top:12px;border-top:1.5px dashed var(--line)}
+.vlabel{font-size:12.5px;font-weight:600;color:var(--accent);margin-bottom:3px}
+.vhint{font-size:12px;color:var(--slate);margin-bottom:9px;line-height:1.4}
+.vreg{margin-bottom:9px}
+.rlab{font-size:12.5px;font-weight:600;margin-bottom:4px}
+.rlab em{font-style:normal;font-weight:400;color:var(--mute)}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.sb{
+  border:1px solid var(--line);background:transparent;border-radius:8px;min-height:44px;padding:6px 3px;
+  font-family:inherit;font-size:11.5px;color:var(--slate);cursor:pointer;line-height:1.15;
+}
+.sb[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.vleg{font-size:11.5px;color:var(--mute);line-height:1.45;margin-top:2px}
+.vresult{margin-top:9px;font-size:12.5px;padding:9px 11px;border-radius:8px;line-height:1.4}
+.vresult.ok{background:#EAF1EB;color:var(--clear)}
+.vresult.hold{background:#F5F0E1;color:var(--caution)}
+.vresult.stop{background:#F6E7E1;color:var(--flare)}
+.vresult + .vresult{margin-top:6px}
+.missbtn{
+  margin-top:12px;background:transparent;border:1px solid var(--line);color:var(--mute);border-radius:8px;
+  padding:0 12px;min-height:44px;font-family:inherit;font-size:12.5px;cursor:pointer;
+}
+.missbtn[aria-pressed="true"]{border-color:var(--mute);color:var(--ink);background:var(--paper)}
+
+/* how-to */
+.howbtn{
+  display:inline-block;margin-top:5px;background:transparent;border:0;padding:8px 0;
+  font-family:inherit;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;
+  border-bottom:1px solid rgba(42,111,143,.4);
+}
+.howbody{margin-top:9px;padding:12px 13px;background:var(--paper);border-radius:9px;border-left:2.5px solid var(--accent)}
+.howwhy{margin:0 0 11px;font-size:12px;line-height:1.5;color:var(--slate);font-style:italic}
+.howsec{margin-bottom:11px}
+.howsec:last-child{margin-bottom:0}
+.howsec>span{display:block;font-size:11.5px;font-weight:600;color:var(--mute);margin-bottom:4px}
+.howsec ul{margin:0;padding-left:16px}
+.howsec li{font-size:12.5px;line-height:1.5;margin-bottom:4px}
+.howsec p{margin:0;font-size:12.5px;line-height:1.5}
+.howsec.err>span{color:var(--flare)}
+.howsec.err li{color:var(--flare)}
+
+/* notes */
+.notebox{margin:14px 0 6px}
+.notebox h3{font-size:13.5px;font-weight:600;margin:0 0 6px}
+.notearea{
+  width:100%;min-height:84px;padding:11px;background:var(--card);border:1px solid var(--line);border-radius:9px;
+  font-family:inherit;font-size:16px;line-height:1.45;color:var(--ink);resize:vertical;
+  -webkit-appearance:none;appearance:none;
+}
+
+/* footer */
+footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.rule{font-size:12.5px;color:var(--slate);line-height:1.5;margin-bottom:7px;display:flex;gap:8px}
+.rule i{font-style:normal;color:var(--mute);font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;padding-top:2px}
+.reset{
+  margin-top:14px;background:transparent;border:1px solid var(--line);color:var(--mute);
+  border-radius:8px;padding:11px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;min-height:44px;
+}
+.logout{
+  display:none;width:100%;min-height:170px;margin-top:11px;padding:11px;
+  background:var(--card);border:1px solid var(--line);border-radius:9px;
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:16px;line-height:1.5;color:var(--ink);
+  resize:vertical;-webkit-appearance:none;appearance:none;
+}
+.status{
+  position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:var(--paper);
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;
+  padding:11px 16px calc(11px + env(safe-area-inset-bottom)) 16px;
+  display:flex;justify-content:space-between;letter-spacing:.03em;
+}
+.load{text-align:center;padding:60px 0;color:var(--mute);font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Shoulders and swim return</div>
+    <h1>1 mile, without a flare</h1>
+    <div class="sub">Every visit is scored 48 hours later. The score decides the next step, not the calendar.</div>
+  </header>
+
+  <div id="app"><div class="load">Loading…</div></div>
+</div>
+<div class="status"><span id="stat">—</span><span id="save">saved</span></div>
+
+<script>
+/* Separate from the main script on purpose: if the main script has a parse
+   error (for example the file was altered during upload) the browser still
+   runs this, so a broken deploy shows a real error instead of hanging on
+   "Loading…". */
+window.addEventListener('error', function(e){
+  var app = document.getElementById('app');
+  if(!app || !app.querySelector('.load')) return;
+  app.innerHTML = '<div class="load" style="text-align:left;color:#9E4128">'
+    + '<b>This page failed to load properly.</b><br><br>'
+    + 'Error: ' + (e.message || 'unknown') + '<br>'
+    + (e.filename ? ('File: ' + e.filename + (e.lineno ? (' line ' + e.lineno) : '') + '<br>') : '')
+    + '<br>This usually means the file was altered during upload. Screenshot this message.</div>';
+});
+</script>
+<script>
+/* ═══════════ PLAN LOGIC (pure, no DOM) ═══════════
+   The plan is gate-based. A week's level is worked out from the 48h scores
+   of earlier weeks, not from the calendar:
+   - clean week      -> next level
+   - "still there"   -> repeat the level
+   - "warning signs" -> drop back two levels (and pause the swim gate)
+   Levels 1-6 each add one new exercise. Level 7 = all in, gate hold.
+   Gate = left shoulder clean 6 straight weeks AND right clean 3 straight weeks.
+   Swim ladder then runs one swim a week, rung by rung. */
+/*LOGIC-START*/
+const LEVEL_MAX = 6;
+const RUNGS = [8,12,16,24,32,40,48,64];
+const GATE_L = 6, GATE_R = 3;
+const RANK = {ok:0, mild:1, hold:2, stop:3};
+const LEVEL_INFO = {
+  1:'Cuff external rotation',
+  2:'Cuff rotation, third set',
+  3:'Serratus work',
+  4:'Y overhead TRX, longer lever',
+  5:'Light overhead press',
+  6:'Vertical pull',
+  7:'Gate hold'
+};
+function okv(v){ return v === 'ok' || v === 'mild'; }
+function worst(list){
+  let w = null;
+  (list || []).forEach(function(v){
+    if(!v) return;
+    if(w === null || RANK[v] > RANK[w]) w = v;
+  });
+  return w;
+}
+/* Evaluate one week's log. A gym visit counts once both shoulders are
+   scored, or it is marked missed. The foot score is optional. */
+function evalWeek(wk, hasSwim){
+  const res = {gymComplete:false, scored:0, L:null, R:null, F:null,
+               swimComplete:false, swimMissed:false, swimVerdict:null};
+  if(!wk) return res;
+  const V = wk.verdict || {};
+  const Ls = [], Rs = [], Fs = [];
+  let pending = false, scored = 0;
+  for(let i = 0; i < 3; i++){
+    const v = V[i];
+    if(v && v.missed) continue;
+    if(v && v.L && v.R){
+      Ls.push(v.L); Rs.push(v.R); if(v.F) Fs.push(v.F); scored++;
+    } else {
+      pending = true;
+    }
+  }
+  res.scored = scored;
+  res.gymComplete = !pending && scored > 0;
+  res.L = worst(Ls); res.R = worst(Rs); res.F = worst(Fs);
+  if(hasSwim){
+    const s = V[3];
+    if(s && s.missed){ res.swimComplete = true; res.swimMissed = true; }
+    else if(s && s.L && s.R){ res.swimComplete = true; res.swimVerdict = worst([s.L, s.R]); }
+  }
+  return res;
+}
+/* State at the START of week `upto`, from weeks 1..upto-1. */
+function progress(weeks, upto){
+  let level = 1, rung = 1, gate = false, sL = 0, sR = 0, gateWeek = null;
+  for(let i = 1; i < upto; i++){
+    const swimWeek = gate;
+    const e = evalWeek(weeks[i], swimWeek);
+    if(e.gymComplete){
+      const okL = okv(e.L), okR = okv(e.R);
+      sL = okL ? sL + 1 : 0;
+      sR = okR ? sR + 1 : 0;
+      if(e.L === 'stop' || e.R === 'stop'){
+        level = Math.max(1, level - 2);
+        if(gate){ gate = false; gateWeek = null; }
+      } else if(okL && okR){
+        level = Math.min(LEVEL_MAX + 1, level + 1);
+      }
+      if(!gate && level > LEVEL_MAX && sL >= GATE_L && sR >= GATE_R){
+        gate = true; gateWeek = i + 1;
+      }
+    }
+    if(swimWeek && e.swimComplete && !e.swimMissed && e.swimVerdict){
+      if(e.swimVerdict === 'stop') rung = Math.max(1, rung - 2);
+      else if(okv(e.swimVerdict)) rung = Math.min(RUNGS.length + 1, rung + 1);
+    }
+  }
+  return {level:level, rung:rung, gate:gate, sL:sL, sR:sR, gateWeek:gateWeek,
+          done: rung > RUNGS.length};
+}
+/*LOGIC-END*/
+
+/* ═══════════ SESSION CONTENT ═══════════ */
+function buildWeek(w, st){
+  const L = st.level;
+  const newAt = (L <= LEVEL_MAX) ? L : 0;   // level that introduces something this week
+  const shoulder = [];
+  const isNew = n => newAt === n;
+
+  shoulder.push({k:'cuff', h:'cuff',
+    n:'Cuff external rotation',
+    s:'both sides · elbow at side · very light',
+    l: L >= 2 ? '3 × 12' : '2 × 12',
+    tag: (isNew(1) || isNew(2)) });
+  if(L >= 3) shoulder.push({k:'serr', h:'serr',
+    n:'Serratus work', s:'band punch or wall slide', l:'2 × 12', tag:isNew(3)});
+  shoulder.push({k:'push', h:'push',
+    n:'Press-ups', s:'stop just above where the right shoulder complains',
+    l:'4 × up to 25', r:'held'});
+  shoulder.push({k:'row', h:null,
+    n:'Cable row', s:'current load · a pull, may progress', l:'4 × 10', r:'+15 kg on 19 Sep'});
+  shoulder.push({k:'brow', h:null,
+    n:'Bridge and row', s:'a pull, may progress', l:'3 × 20'});
+  shoulder.push({k:'trxy', h:'trxy',
+    n:'Y overhead TRX',
+    s: L >= 4 ? 'longer lever: feet a little further forward · reps unchanged' : 'held',
+    l:'4 × 10', tag:isNew(4)});
+  if(L >= 5) shoulder.push({k:'ohp', h:'ohp',
+    n:'Light overhead press', s:'landmine or light dumbbell · stay in the pain-free range',
+    l:'2 × 8', tag:isNew(5)});
+  if(L >= 6) shoulder.push({k:'vpull', h:'vpull',
+    n:'Vertical pull', s:'neutral-grip pulldown · light · a pull, may progress',
+    l:'2 × 10', tag:isNew(6)});
+
+  const legs = [
+    {k:'squat', h:null, n:'Dumbbell squat', s:'held while the foot is in Phase 1', l:'4 × 12', r:'24 kg on 19 Sep'},
+    {k:'llung', h:null, n:'Lateral lunge', s:'held', l:'4 × 8', r:'12.5 kg on 19 Sep'},
+    {k:'slham', h:null, n:'Single-leg hamstring', s:'held', l:'4 × 10', r:'16 kg on 19 Sep'}
+  ];
+  const foot = [
+    {k:'foot', h:null, n:'Foot programme', s:'from the foot tracker · tick when done', l:'about 30 min'}
+  ];
+
+  const sessions = [];
+  for(let i = 0; i < 3; i++){
+    sessions.push({t:'Visit ' + (i+1), kind:'gym',
+      groups:[{g:'Shoulders', items:shoulder}, {g:'Legs', items:legs}, {g:'Foot', items:foot}]});
+  }
+  if(st.gate){
+    if(st.done){
+      sessions.push({t:'Swim', kind:'swim', groups:[{g:'', items:[
+        {k:'swim', h:'swim', n:'Hold 64 lengths', s:'front crawl · easy pace · no wetsuit', l:'64 lengths', r:'1,600 m'}
+      ]}]});
+    } else {
+      const n = RUNGS[st.rung - 1];
+      sessions.push({t:'Swim · rung ' + st.rung + ' of 8', kind:'swim', groups:[{g:'', items:[
+        {k:'swim', h:'swim', n:'Swim ' + n + ' lengths',
+         s:'front crawl · easy pace · no wetsuit · only distance changes',
+         l:n + ' lengths', r:(n * 25) + ' m'}
+      ]}]});
+    }
+  }
+  return {w:w, st:st, sessions:sessions};
+}
+
+/* ═══════════ HOW TO ═══════════ */
+let HOWOPEN = {};
+const HOW = {
+cuff:{
+  why:'Trains the rotator cuff at low load through the rotation swimming asks for again and again. Light on purpose: this builds capacity, and your tendon has a history of reacting to small jumps.',
+  setup:['Stand or sit with a light band anchored at elbow height on your inner side, or lie on your side with a very light dumbbell (1–2 kg).','Tuck a small rolled towel between elbow and ribs. Elbow bent to 90°, staying against the towel.'],
+  doit:['Rotate the forearm outward, away from your belly, through a comfortable range (about 45°). The elbow stays on the towel.','Take about 2 seconds out and 3 seconds back. Control the return.','Both sides, same load. Stop the set if the right posterior shoulder complains.'],
+  load:'Nothing to progress here. Level 2 adds a set at the same load. Any load increase is a separate decision made later.',
+  errors:['Elbow drifting away from the ribs and the towel dropping','Shrugging the shoulder up','Turning the trunk to fake the range','A band or weight that is too heavy. It should feel easy']
+},
+serr:{
+  why:'Serratus anterior holds the shoulder blade against the ribcage and turns it upward, which is the reach in front crawl. It is the piece your current session does not train.',
+  setup:['Band punch: anchor a light band at chest height behind you, hold the end, elbow bent, standing tall.','Wall slide: forearms flat on a wall at shoulder height, elbows under the shoulders.'],
+  doit:['Band punch: reach the fist forward and round, letting the shoulder blade wrap around the ribs, without shrugging or leaning.','Wall slide: press the forearms into the wall and slide them up slowly, ribs down.','About 2 seconds out, 3 seconds back.'],
+  load:'Not progressed at this level.',
+  errors:['Shrugging toward the ears','Arching the lower back to gain height','Elbows flaring away from the wall','Rushing the return']
+},
+push:{
+  why:'Held for now. Your right shoulder reports pain on the way down and at the bottom, so depth is what changes, not volume.',
+  setup:['Decide your stopping depth before the set: just above where the right posterior pain begins.'],
+  doit:['Same sets and reps as your recent sessions.','Stop every rep at the depth you chose.','If the pain shows up earlier than usual, that is the end of press-ups for the day.'],
+  load:'No progression until the right shoulder has 3 clean weeks and there is a week with no new exercise. Then one small step, on its own.',
+  errors:['Dropping deeper as the set gets tiring','Elbows flared wide','Hips sagging','Adding a set because it felt fine']
+},
+trxy:{
+  why:'The same movement with a longer lever, so the arms carry more bodyweight overhead. It is the closest gym pattern to the reach in front crawl.',
+  setup:['Hold the handles with arms straight in front at chest height.','Walk the feet forward a small step so the body leans back a little more.'],
+  doit:['Pull up and out into a Y, thumbs up, ribs down.','Return slowly.','Same 4 × 10. Only the angle changed.'],
+  load:'Change one thing only: the angle. Never reps and angle together.',
+  errors:['Hips sagging out of the straight body line','Shrugging at the top','Going into a range the shoulder objects to']
+},
+ohp:{
+  why:'First loaded overhead work. Kept light, pain-free, and in the plane a swimmer actually reaches.',
+  setup:['Landmine press: barbell end wedged in a corner, half-kneeling or standing, hand at the shoulder. Or a light dumbbell held in front of the shoulder.','Choose a load you could lift 15 times. This is 2 × 8.'],
+  doit:['Press up and slightly forward, about 30° in front of straight out to the side, not directly out to the side.','Stop below any height where the shoulder complains. Range can grow later.','Lower over 3 seconds.'],
+  load:'No load increases in the first weeks. Range first, load later.',
+  errors:['Arching the lower back','Pressing straight out to the side','Pushing into pain','Going heavy early']
+},
+vpull:{
+  why:'Adds the lat-driven pull of the stroke that rows do not cover.',
+  setup:['Neutral-grip lat pulldown (palms facing), or a light band pulldown.','Light. 2 × 10 should feel easy.'],
+  doit:['Start with the shoulder blades gently down and back, chest up.','Pull the elbows down toward the ribs.','Control the return over 3 seconds. Do not let the shoulders shoot up to the ears at the top.'],
+  load:'Progresses only under the pull rule: smallest jump, one pull per week, only after a clean 48h.',
+  errors:['Leaning back and yanking','Shrugging','Letting the bar snap up at the top','Going heavy in the first weeks']
+},
+swim:{
+  why:'The goal is 64 lengths of 25 m. Each rung is one small increase in distance, nothing else.',
+  setup:['Front crawl at an easy, conversational effort. No wetsuit, paddles or fins.','Rest at the wall whenever you need to. Resting does not change the rung.'],
+  doit:['Swim the set distance at the same easy pace as last time.','No extra gym work that day beyond what is written.','Score both shoulders at 48 hours, not that evening.'],
+  load:'Distance is the only variable and pace never goes up. Clean at 48h means the next rung comes next week.',
+  errors:['Swimming extra because it felt good','Adding pace, fins or paddles','Scoring the same evening instead of at 48h']
+}
+};
+function howHTML(key){
+  const h = key && HOW[key];
+  if(!h) return '';
+  const open = HOWOPEN[key];
+  let inner = '';
+  if(open){
+    inner = '<div class="howbody">'
+      + '<p class="howwhy">' + h.why + '</p>'
+      + '<div class="howsec"><span>Set up</span><ul>' + h.setup.map(x => '<li>' + x + '</li>').join('') + '</ul></div>'
+      + '<div class="howsec"><span>Do it</span><ul>' + h.doit.map(x => '<li>' + x + '</li>').join('') + '</ul></div>'
+      + '<div class="howsec"><span>Progress</span><p>' + h.load + '</p></div>'
+      + '<div class="howsec err"><span>Common errors</span><ul>' + h.errors.map(x => '<li>' + x + '</li>').join('') + '</ul></div>'
+      + '</div>';
+  }
+  return '<button class="howbtn" data-how="' + key + '">' + (open ? 'Hide' : 'How to do this') + '</button>' + inner;
+}
+
+/* ═══════════ STORAGE ═══════════
+   The key differs from the foot tracker's on purpose: both pages can live
+   on the same GitHub Pages origin, and localStorage is shared per origin. */
+const KEY = 'shoulder-plan-v1';
+let memStore = {};
+function hasLocalStorage(){
+  try{
+    const t = '__sh_test__';
+    localStorage.setItem(t, t);
+    localStorage.removeItem(t);
+    return true;
+  }catch(e){ return false; }
+}
+const LS_OK = hasLocalStorage();
+async function storageGet(key){
+  if(window.storage && typeof window.storage.get === 'function'){
+    try{ return await window.storage.get(key); }catch(e){ /* fall through */ }
+  }
+  if(LS_OK){
+    const v = localStorage.getItem(key);
+    return v === null ? null : {value:v};
+  }
+  return memStore.hasOwnProperty(key) ? {value:memStore[key]} : null;
+}
+async function storageSet(key, value){
+  if(window.storage && typeof window.storage.set === 'function'){
+    try{ await window.storage.set(key, value); return; }catch(e){ /* fall through */ }
+  }
+  if(LS_OK){ localStorage.setItem(key, value); return; }
+  memStore[key] = value;
+}
+
+/* ═══════════ STATE ═══════════ */
+const FOOT_START = '2026-08-24';   // foot programme week 1, for the overlap notes
+let S = {cur:1, start:null, weeks:{}, lastBackup:null};
+let saveTimer = null;
+let NOTICE = null;                 // visible confirmation after restore (not saved)
+const DAY = 86400000;
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function isoOf(d){ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); }
+function todayISO(){ return isoOf(new Date()); }
+function addDays(iso, n){
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return isoOf(d);
+}
+function nextMonday(){
+  const d = new Date();
+  const dow = d.getDay();
+  const add = dow === 1 ? 0 : ((8 - dow) % 7);
+  d.setDate(d.getDate() + add);
+  return isoOf(d);
+}
+function currentWeek(){
+  if(!S.start) return null;
+  const s = new Date(S.start + 'T00:00:00');
+  const n = new Date(todayISO() + 'T00:00:00');
+  const w = Math.floor((n - s) / (7 * DAY)) + 1;
+  return Math.max(1, Math.min(60, w));
+}
+function dayLabel(){
+  return new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+}
+function fmt(iso){
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+}
+function weekRange(w){
+  if(!S.start) return '';
+  return fmt(addDays(S.start, (w-1)*7)) + ' to ' + fmt(addDays(S.start, (w-1)*7 + 6));
+}
+function footWeek(w){
+  if(!S.start) return null;
+  const d = new Date(addDays(S.start, (w-1)*7) + 'T00:00:00');
+  const f = new Date(FOOT_START + 'T00:00:00');
+  return Math.floor((d - f) / (7 * DAY)) + 1;
+}
+
+async function load(){
+  try{ if(navigator.storage && navigator.storage.persist) await navigator.storage.persist(); }catch(e){ /* harmless */ }
+  try{
+    const r = await storageGet(KEY);
+    if(r && r.value) S = Object.assign(S, JSON.parse(r.value));
+  }catch(e){ /* first run */ }
+  const cw = currentWeek();
+  if(cw) S.cur = cw;
+  render();
+}
+function watchdog(){
+  const app = document.getElementById('app');
+  if(app && app.querySelector('.load')){
+    app.innerHTML = '<div class="load" style="text-align:left;color:var(--ink)">'
+      + '<b>Stuck loading?</b><br><br>'
+      + 'If you opened this from Messages, Files or an attachment, it probably opened in Quick Look, '
+      + 'which shows the page but cannot run its script.<br><br>'
+      + 'Tap <b>Share</b> and choose <b>Open in Safari</b>. Once it runs in Safari, use Share, then '
+      + '<b>Add to Home Screen</b>, from the live https address (not from a file).</div>';
+  }
+}
+setTimeout(watchdog, 2500);
+function save(){
+  document.getElementById('save').textContent = 'saving…';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    try{
+      await storageSet(KEY, JSON.stringify(S));
+      document.getElementById('save').textContent = 'saved';
+    }catch(e){
+      document.getElementById('save').textContent = 'not saved, retry';
+    }
+  }, 400);
+}
+const wk = w => (S.weeks[w] = S.weeks[w] || {done:{}, verdict:{}, open:null, pull:null, note:''});
+
+/* ═══════════ RENDER ═══════════ */
+const REG = [['L','Left shoulder',''], ['R','Right shoulder',''], ['F','Foot',' (optional)']];
+const VOPT = [['ok','Clean'], ['mild','Mild'], ['hold','Still there'], ['stop','Warning']];
+
+function dotClass(dn, total, V){
+  if(V && V.missed) return 'dot miss';
+  const w = worst([V && V.L, V && V.R, V && V.F]);
+  if(w === 'stop') return 'dot bad';
+  if(w === 'hold') return 'dot hold';
+  if(w) return 'dot clear';
+  if(dn.length >= total && total) return 'dot done';
+  if(dn.length) return 'dot part';
+  return 'dot';
+}
+
+function ladderHTML(all){
+  let h = '<div class="ladbox"><div class="ladder">';
+  for(let i = 1; i <= LEVEL_MAX; i++){
+    const cls = (all.gate || all.level > i) ? 'done' : (all.level === i ? 'now' : '');
+    h += '<div class="chip lv ' + cls + '">' + i + '</div>';
+  }
+  h += '<div class="chip gt ' + (all.gate ? 'done' : (all.level > LEVEL_MAX ? 'now' : '')) + '">G</div>';
+  RUNGS.forEach((n, i) => {
+    const r = i + 1;
+    const cls = (all.gate && all.rung > r) ? 'done' : ((all.gate && all.rung === r) ? 'now' : '');
+    h += '<div class="chip rg ' + cls + '">' + n + '</div>';
+  });
+  h += '</div><div class="ladlab"><span>Build</span><span>Gate</span><span>Swim ladder, lengths</span></div>';
+  let line;
+  if(all.done){
+    line = '<b>64 lengths reached.</b> Hold it for 6 to 8 weeks before extending anything.';
+  } else if(all.gate){
+    line = '<b>Swim rung ' + all.rung + ' of 8.</b> Next swim: ' + RUNGS[all.rung-1] + ' lengths.';
+  } else if(all.level > LEVEL_MAX){
+    line = '<b>Gate hold.</b> Left shoulder ' + all.sL + ' of ' + GATE_L + ' clean weeks · right shoulder ' + all.sR + ' of ' + GATE_R + '.';
+  } else {
+    line = '<b>Level ' + all.level + ' of 6:</b> ' + LEVEL_INFO[all.level] + '. Gate: left ' + all.sL + ' of ' + GATE_L + ' clean weeks · right ' + all.sR + ' of ' + GATE_R + '.';
+  }
+  h += '<div class="ladstate">' + line + '</div></div>';
+  return h;
+}
+
+function render(){
+  const w = S.cur;
+  const st = progress(S.weeks, w);
+  const all = progress(S.weeks, 200);
+  const D = buildWeek(w, st);
+  const ws = wk(w);
+  const app = document.getElementById('app');
+  const cw = currentWeek();
+
+  // today bar / first-run setup
+  let today = '';
+  if(!S.start){
+    today = '<div class="today setup">'
+      + '<div class="tlabel">Set your start date</div>'
+      + '<div class="tsub">The day you do your first visit. Weeks count forward from here.</div>'
+      + '<input type="date" id="startdate" class="datein" value="' + nextMonday() + '">'
+      + '<button class="startbtn" id="setstart">Start</button></div>';
+  } else {
+    const off = cw !== w;
+    today = '<div class="today"><div>'
+      + '<div class="tlabel">' + dayLabel() + '</div>'
+      + '<div class="tsub">' + (off ? ('Viewing week ' + w + ' · you are in week ' + cw) : ('Week ' + cw + ' · ' + weekRange(cw))) + '</div>'
+      + '</div>' + (off ? '<button class="jump" id="jump">Today</button>' : '') + '</div>';
+  }
+
+  const notice = NOTICE ? '<div class="banner ok" style="margin-top:14px"><b>' + NOTICE + '</b></div>' : '';
+
+  // week header
+  let phaseName;
+  if(st.gate) phaseName = st.done ? 'Swim ladder complete' : 'Swim ladder';
+  else if(st.level > LEVEL_MAX) phaseName = 'Gate hold';
+  else phaseName = 'Level ' + st.level + ' · ' + LEVEL_INFO[st.level];
+  let h = '<div class="weekbar">'
+    + '<button class="navbtn" id="prev" ' + (w <= 1 ? 'disabled' : '') + '>‹</button>'
+    + '<div class="wtitle"><div class="wnum">Week ' + w + (S.start ? ' · ' + weekRange(w) : '') + '</div>'
+    + '<div class="wphase">' + phaseName + '</div></div>'
+    + '<button class="navbtn" id="next" ' + (w >= 60 ? 'disabled' : '') + '>›</button></div>';
+
+  // banners
+  const prevSt = w > 1 ? progress(S.weeks, w - 1) : null;
+  if(w > 1){
+    const pw = S.weeks[w-1];
+    const pe = evalWeek(pw, prevSt.gate);
+    const hasAct = pw && (Object.keys(pw.verdict || {}).length || Object.values(pw.done || {}).some(x => x && x.length));
+    if(hasAct && !pe.gymComplete && pe.scored === 0 && !(pw.verdict && Object.values(pw.verdict).some(v => v && v.missed))){
+      h += '<div class="banner">Last week has visits that are not scored yet, so the level has not moved. Score them once 48 hours have passed.</div>';
+    } else if(hasAct && !pe.gymComplete){
+      h += '<div class="banner">Last week is not fully scored yet. Score or mark each visit as missed so the level can move.</div>';
+    } else if(pe.gymComplete){
+      if(prevSt.level > st.level) h += '<div class="banner warn"><b>Backdown.</b> A warning score last week dropped the level by two. Five to seven days off the movement that provoked it, then resume here.</div>';
+      else if(prevSt.level === st.level && st.level <= LEVEL_MAX) h += '<div class="banner gate"><b>Repeat week.</b> Last week did not score clean, so this level runs again. Nothing new gets added.</div>';
+    }
+  }
+  if(st.gate && !st.done){
+    h += '<div class="banner swim"><b>Swim week.</b> Distance is the only thing that goes up. Pulls may progress. Nothing overhead, no press-up progression. If either shoulder flares, stop swimming, take five to seven days off the provoking movements and drop back two rungs.</div>';
+  } else if(st.gate && st.done){
+    h += '<div class="banner ok"><b>64 lengths.</b> Hold this comfortably for 6 to 8 weeks before extending.</div>';
+  } else if(st.level > LEVEL_MAX){
+    h += '<div class="banner gate"><b>Gate hold.</b> No new exercise. Keep scoring both shoulders. You need ' + GATE_L + ' straight clean weeks on the left (now ' + st.sL + ') and ' + GATE_R + ' on the right (now ' + st.sR + '). One small step on press-ups, Y overhead TRX or overhead press is allowed here, one at a time, and only after its own clean 48h.</div>';
+  } else {
+    h += '<div class="banner"><b>New this week: ' + LEVEL_INFO[st.level] + '.</b> It is the only new exercise. Everything else stays as written, apart from one optional pull progression below.</div>';
+  }
+  if(st.sR >= GATE_R && !st.gate){
+    h += '<div class="banner ok">Right shoulder has ' + st.sR + ' clean weeks. Press-ups may take one small step, but only in a week with no new exercise.</div>';
+  }
+  const fw = footWeek(w);
+  if(fw === 6 || fw === 12){
+    h += '<div class="banner">Foot re-test week (foot week ' + fw + '). The foot tracker asks for a max test, so consider skipping the pull progression this week.</div>';
+  } else if(fw === 13){
+    h += '<div class="banner">Foot Phase 2 starts this week (first hops). The foot gets its own new load, so keep the shoulder side as quiet as the plan allows.</div>';
+  }
+
+  // pull progression selector
+  const pulls = [['row','Cable row'], ['brow','Bridge and row']];
+  if(st.level >= 6) pulls.push(['vpull','Vertical pull']);
+  h += '<div class="pullbox"><h3>Pull progression this week</h3>'
+    + '<p>Smallest available jump, one pull only, and only if its top reps were clean at 48h last time.</p>'
+    + '<div class="popts"><button class="popt" data-pull="" aria-pressed="' + (!ws.pull) + '">None</button>'
+    + pulls.map(p => '<button class="popt" data-pull="' + p[0] + '" aria-pressed="' + (ws.pull === p[0]) + '">' + p[1] + '</button>').join('')
+    + '</div></div>';
+
+  // sessions
+  let sess = '';
+  D.sessions.forEach((s, idx) => {
+    const dn = ws.done[idx] || [];
+    const V = ws.verdict[idx] || {};
+    const total = s.groups.reduce((a, g) => a + g.items.length, 0);
+    const dc = dotClass(dn, total, V);
+    const open = ws.open === idx;
+
+    let rows = '';
+    s.groups.forEach(g => {
+      if(g.g) rows += '<div class="grp">' + g.g + '</div>';
+      g.items.forEach(it => {
+        const on = dn.includes(it.k);
+        rows += '<div class="exrow">'
+          + '<button class="box" data-s="' + idx + '" data-k="' + it.k + '" aria-pressed="' + on + '" aria-label="' + it.n + '"></button>'
+          + '<div class="exname">' + it.n + (it.tag ? '<span class="newtag">new</span>' : '')
+          + (it.s ? '<br><span class="exsub">' + it.s + '</span>' : '')
+          + howHTML(it.h) + '</div>'
+          + '<div class="exdose">' + it.l + (it.r ? '<br><i>' + it.r + '</i>' : '') + '</div></div>';
+      });
+    });
+
+    // 48h verdict
+    const isSwim = s.kind === 'swim';
+    const regs = isSwim ? REG.slice(0, 2) : REG;
+    let verd = '<div class="verdict"><div class="vlabel">48 hours later</div>'
+      + '<div class="vhint">Score two days after this ' + (isSwim ? 'swim' : 'visit') + ', not during and not that evening.</div>';
+    regs.forEach(r => {
+      verd += '<div class="vreg"><div class="rlab">' + r[1] + '<em>' + r[2] + '</em></div><div class="seg">'
+        + VOPT.map(o => '<button class="sb" data-s="' + idx + '" data-r="' + r[0] + '" data-v="' + o[0] + '" aria-pressed="' + (V[r[0]] === o[0]) + '">' + o[1] + '</button>').join('')
+        + '</div></div>';
+    });
+    verd += '<div class="vleg">Mild: 2/10 or less, gone by 24h. Still there: present at 48h. Warning: night pain, pain lying on the shoulder, constant ache, sharp catch overhead, or the foot tearing or deep ache.</div>';
+
+    const wl = worst([V.L, V.R]);
+    if(V.L && V.R){
+      if(wl === 'stop') verd += '<div class="vresult stop">' + (isSwim
+        ? 'Warning signs. Stop swimming. Five to seven days off the provoking movements, then drop back two rungs.'
+        : 'Warning signs. Stop this level. Five to seven days off whatever provoked it, then return two levels below, not to the start.') + '</div>';
+      else if(wl === 'hold') verd += '<div class="vresult hold">' + (isSwim
+        ? 'Still there at 48h. Repeat this rung next week.'
+        : 'Still there at 48h. Repeat this level. Nothing new next week.') + '</div>';
+      else verd += '<div class="vresult ok">' + (isSwim
+        ? 'Clean. Next rung next week.'
+        : 'Clean. Next level once the whole week is scored.') + '</div>';
+    }
+    if(!isSwim && V.F){
+      if(V.F === 'stop') verd += '<div class="vresult stop">Foot warning: follow the foot backdown (five to seven days off impact, return two levels below). Log it in the foot tracker.</div>';
+      else if(V.F === 'hold') verd += '<div class="vresult hold">Foot still there at 48h: repeat the foot level.</div>';
+    }
+    verd += '<button class="missbtn" data-miss="' + idx + '" aria-pressed="' + !!V.missed + '">'
+      + (V.missed ? 'Marked as missed (tap to undo)' : 'I missed this ' + (isSwim ? 'swim' : 'visit') + ' (not made up)') + '</button></div>';
+
+    sess += '<div class="card ' + (open ? 'open' : '') + '">'
+      + '<div class="chead" data-open="' + idx + '"><div class="' + dc + '"></div>'
+      + '<div class="ctitle">' + s.t + '</div><div class="cmeta">' + dn.length + '/' + total + '</div><div class="chev">›</div></div>'
+      + '<div class="cbody">' + rows + verd + '</div></div>';
+  });
+
+  const notes = '<div class="notebox"><h3>Notes for this week</h3>'
+    + '<textarea id="wknote" class="notearea" placeholder="Loads, flares, how it felt, missed visits">' + (ws.note || '').replace(/</g,'&lt;') + '</textarea></div>';
+
+  const rules = '<footer>'
+    + '<div class="rule"><i>1</i><span>Score at 48 hours, not during. Left shoulder, right shoulder and foot separately.</span></div>'
+    + '<div class="rule"><i>2</i><span>One new exercise per week. Pulls may progress by the smallest jump, one a week.</span></div>'
+    + '<div class="rule"><i>3</i><span>Never consecutive days. Never make up a missed visit.</span></div>'
+    + '<div class="rule"><i>4</i><span>A flare costs days, not months: five to seven days off the provoking movement, back two levels or rungs, never to zero.</span></div>'
+    + '<div class="rule"><i>5</i><span>Visits running over 80 minutes: trim the leg lifts to 3 sets first.</span></div>'
+    + '<div class="rule"><i>6</i><span>Press-up depth stays above the right shoulder pain until it settles. Ask a physio about it, given the old AC injury.</span></div>'
+    + backupNudge()
+    + '<button class="reset" id="export" style="border-color:var(--slate);color:var(--ink)">Copy log for review</button> '
+    + '<button class="reset" id="backup" style="border-color:var(--accent);color:var(--accent)">Back up data</button> '
+    + '<button class="reset" id="restore">Restore</button> '
+    + '<button class="reset" id="reset">Clear this week</button>'
+    + '<textarea id="logout" class="logout" readonly></textarea>'
+    + '<div id="restorebox" style="display:none;margin-top:11px">'
+    + '<div style="font-size:12.5px;color:var(--slate);line-height:1.45;margin-bottom:7px">Paste a shoulder backup code below, then tap Load. This replaces everything currently logged here. Turn off Smart Punctuation first (Settings, General, Keyboard).</div>'
+    + '<textarea id="restorein" class="logout" style="display:block;min-height:100px" placeholder="Paste backup code here"></textarea>'
+    + '<button class="reset" id="dorestore" style="border-color:var(--flare);color:var(--flare)">Load pasted backup</button>'
+    + '<div id="restoremsg" style="font-size:12.5px;margin-top:8px;line-height:1.4"></div></div>'
+    + '</footer>';
+
+  app.innerHTML = today + notice + ladderHTML(all) + h + sess + notes + rules;
+
+  const visits = D.sessions.filter((s, i) => (ws.done[i] || []).length).length;
+  document.getElementById('stat').textContent = (st.gate ? ('SWIM RUNG ' + Math.min(st.rung, 8)) : ('LEVEL ' + Math.min(st.level, 7))) + ' · WK ' + w + ' · ' + visits + '/' + D.sessions.length + ' DONE';
+  bind();
+}
+
+function buildLog(){
+  const V = {ok:'clean', mild:'mild', hold:'still there', stop:'WARNING'};
+  let out = 'SHOULDER AND SWIM LOG, exported ' + todayISO() + '\n';
+  out += 'Start date: ' + (S.start || 'not set') + '\n';
+  const all = progress(S.weeks, 200);
+  out += 'Now: ' + (all.done ? 'swim ladder complete'
+        : all.gate ? ('swim rung ' + all.rung + ' of 8 (' + RUNGS[all.rung-1] + ' lengths)')
+        : (all.level > LEVEL_MAX ? 'gate hold' : ('level ' + all.level + ' of 6, ' + LEVEL_INFO[all.level])))
+        + '. Clean-week streaks: left ' + all.sL + '/' + GATE_L + ', right ' + all.sR + '/' + GATE_R + '\n\n';
+  const nums = Object.keys(S.weeks).map(Number).sort((a,b) => a-b);
+  let any = false;
+  nums.forEach(n => {
+    const ws = S.weeks[n];
+    const st = progress(S.weeks, n);
+    const D = buildWeek(n, st);
+    const lines = [];
+    D.sessions.forEach((s, i) => {
+      const d = (ws.done[i] || []).length;
+      const v = ws.verdict[i] || {};
+      if(!d && !v.L && !v.R && !v.F && !v.missed) return;
+      let txt = '    ' + s.t + ': ' + d + ' items ticked';
+      if(v.missed) txt += ' → missed';
+      else if(v.L || v.R || v.F){
+        txt += ' → 48h L ' + (V[v.L] || '-') + ' / R ' + (V[v.R] || '-');
+        if(s.kind !== 'swim') txt += ' / foot ' + (V[v.F] || '-');
+      } else txt += ' → 48h not scored';
+      lines.push(txt);
+    });
+    if(!lines.length && !ws.pull && !ws.note) return;
+    any = true;
+    out += '  Week ' + n + ' (' + (st.gate ? ('swim rung ' + st.rung) : (st.level > LEVEL_MAX ? 'gate hold' : ('level ' + st.level + ', ' + LEVEL_INFO[st.level]))) + ')\n';
+    lines.forEach(l => out += l + '\n');
+    if(ws.pull) out += '    Pull progressed: ' + ({row:'cable row', brow:'bridge and row', vpull:'vertical pull'}[ws.pull] || ws.pull) + '\n';
+    if(ws.note) out += '    Note: ' + ws.note.replace(/\n/g, ' ') + '\n';
+  });
+  if(!any) out += '  Nothing logged yet.\n';
+  out += '\nQUESTIONS\n  (add anything before sending)\n';
+  return out;
+}
+
+const MS_DAY = 86400000;
+function daysSinceBackup(){
+  if(!S.lastBackup) return null;
+  const t = Date.parse(S.lastBackup);
+  if(isNaN(t)) return null;
+  return Math.floor((Date.now() - t) / MS_DAY);
+}
+function hasData(w){
+  if(!w) return false;
+  const a = Object.values(w.done || {}).some(x => x && x.length);
+  const b = Object.values(w.verdict || {}).some(v => v && (v.L || v.R || v.F || v.missed));
+  return a || b || !!w.pull || !!(w.note && w.note.trim());
+}
+function anythingLogged(){
+  return Object.keys(S.weeks || {}).some(k => hasData(S.weeks[k]));
+}
+function backupNudge(){
+  if(!anythingLogged()) return '';
+  const d = daysSinceBackup();
+  if(d !== null && d < 30) return '';
+  const msg = (d === null) ? 'You have logged visits but never backed up.' : ('Last backup was ' + d + ' days ago.');
+  return '<div class="banner gate" style="margin:14px 0 0"><b>Back up your log.</b> ' + msg + ' Tap <b>Back up data</b> below and keep the code somewhere safe.</div>';
+}
+function trimmedWeeks(){
+  const out = {};
+  Object.keys(S.weeks || {}).forEach(k => { if(hasData(S.weeks[k])) out[k] = S.weeks[k]; });
+  return out;
+}
+
+function bind(){
+  const sd = document.getElementById('setstart');
+  if(sd) sd.onclick = () => {
+    const v = document.getElementById('startdate').value;
+    if(!v) return;
+    S.start = v;
+    S.cur = currentWeek() || 1;
+    render(); save();
+  };
+  const j = document.getElementById('jump');
+  if(j) j.onclick = () => { NOTICE = null; S.cur = currentWeek(); render(); save(); };
+
+  const p = document.getElementById('prev'), n = document.getElementById('next');
+  if(p) p.onclick = () => { NOTICE = null; S.cur = Math.max(1, S.cur - 1); render(); save(); };
+  if(n) n.onclick = () => { NOTICE = null; S.cur = Math.min(60, S.cur + 1); render(); save(); };
+
+  document.querySelectorAll('.chead').forEach(hd => hd.onclick = () => {
+    const ws = wk(S.cur), i = +hd.dataset.open;
+    ws.open = ws.open === i ? null : i;
+    render(); save();
+  });
+
+  document.querySelectorAll('.box').forEach(b => b.onclick = () => {
+    const ws = wk(S.cur), s = +b.dataset.s, k = b.dataset.k;
+    ws.done[s] = ws.done[s] || [];
+    const at = ws.done[s].indexOf(k);
+    if(at >= 0) ws.done[s].splice(at, 1); else ws.done[s].push(k);
+    ws.open = s;
+    render(); save();
+  });
+
+  document.querySelectorAll('.howbtn').forEach(b => b.onclick = (e) => {
+    e.stopPropagation();
+    const k = b.dataset.how;
+    HOWOPEN[k] = !HOWOPEN[k];
+    render();
+  });
+
+  document.querySelectorAll('.sb').forEach(b => b.onclick = () => {
+    const ws = wk(S.cur), s = +b.dataset.s, r = b.dataset.r, v = b.dataset.v;
+    const cur = ws.verdict[s] || {};
+    delete cur.missed;
+    cur[r] = cur[r] === v ? null : v;
+    ws.verdict[s] = cur;
+    ws.open = s;
+    render(); save();
+  });
+
+  document.querySelectorAll('.missbtn').forEach(b => b.onclick = () => {
+    const ws = wk(S.cur), s = +b.dataset.miss;
+    const cur = ws.verdict[s] || {};
+    if(cur.missed){ ws.verdict[s] = {}; }
+    else { ws.verdict[s] = {missed:true}; }
+    ws.open = s;
+    render(); save();
+  });
+
+  document.querySelectorAll('.popt').forEach(b => b.onclick = () => {
+    const ws = wk(S.cur);
+    ws.pull = b.dataset.pull || null;
+    render(); save();
+  });
+
+  const nt = document.getElementById('wknote');
+  if(nt) nt.onchange = () => { wk(S.cur).note = nt.value; save(); };
+
+  const ex = document.getElementById('export');
+  if(ex) ex.onclick = async () => {
+    const txt = buildLog();
+    const ta = document.getElementById('logout');
+    ta.value = txt;
+    ta.style.display = 'block';
+    try{
+      await navigator.clipboard.writeText(txt);
+      ex.textContent = 'Copied. Paste it into the chat';
+    }catch(e){
+      ta.select();
+      ex.textContent = 'Select the text below and copy';
+    }
+    setTimeout(() => { ex.textContent = 'Copy log for review'; }, 6000);
+  };
+
+  const bk = document.getElementById('backup');
+  if(bk) bk.onclick = async () => {
+    const code = JSON.stringify({v:1, kind:'shoulder', start:S.start, weeks:trimmedWeeks()});
+    const ta = document.getElementById('logout');
+    ta.value = code;
+    ta.style.display = 'block';
+    S.lastBackup = new Date().toISOString();
+    try{
+      await navigator.clipboard.writeText(code);
+      bk.textContent = 'Copied. Paste it somewhere safe';
+    }catch(e){
+      ta.select();
+      bk.textContent = 'Select the text above and copy';
+    }
+    save();
+    setTimeout(() => { bk.textContent = 'Back up data'; }, 6000);
+  };
+
+  const rs = document.getElementById('restore');
+  if(rs) rs.onclick = () => {
+    const box = document.getElementById('restorebox');
+    box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+  };
+
+  const dr = document.getElementById('dorestore');
+  if(dr) dr.onclick = () => {
+    const msg = document.getElementById('restoremsg');
+    const raw = (document.getElementById('restorein').value || '').trim();
+    if(!raw){ msg.style.color = 'var(--flare)'; msg.textContent = 'Nothing pasted.'; return; }
+    let d = null;
+    try{ d = JSON.parse(raw); }
+    catch(e){
+      msg.style.color = 'var(--flare)';
+      msg.textContent = 'That does not look like a backup code. Paste the whole thing, and check Smart Punctuation is off.';
+      return;
+    }
+    if(!d || typeof d !== 'object' || d.kind !== 'shoulder' || !d.weeks){
+      msg.style.color = 'var(--flare)';
+      msg.textContent = 'That is not a shoulder tracker backup. (A foot tracker backup will not work here.)';
+      return;
+    }
+    S.start = d.start || S.start;
+    S.weeks = d.weeks || {};
+    S.cur = currentWeek() || 1;
+    const count = Object.keys(S.weeks).length;
+    NOTICE = 'Restored ' + count + ' week' + (count === 1 ? '' : 's') + ' of data.';
+    render(); save();
+    window.scrollTo(0, 0);
+  };
+
+  const r = document.getElementById('reset');
+  if(r) r.onclick = () => {
+    S.weeks[S.cur] = {done:{}, verdict:{}, open:null, pull:null, note:''};
+    render(); save();
+  };
+}
+
+load().catch(e => {
+  const app = document.getElementById('app');
+  if(app) app.innerHTML = '<div class="load" style="text-align:left;color:var(--flare)">'
+    + '<b>Something went wrong loading the tracker.</b><br><br>'
+    + ((e && e.message) ? e.message : String(e)) + '<br><br>'
+    + 'Close and reopen the page. If it keeps happening, screenshot this message.</div>';
+});
+</script>
+</body>
+</html>
